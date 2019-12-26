@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="watchCallback"
+            type="com.example.bakingtime.view.WatchVideoCallback" />
+
+        <variable
+            name="step"
+            type="com.example.bakingtime.model.Step" />
+
+        <variable
+            name="totalStepCount"
+            type="Integer" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{step.getDescription()}"
+            android:textColor="@color/stepItemTextColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text='1. Preheat the oven to 350\u00b0F. Butter a 9\" deep dish pie pan.' />
+
+        <Button
+            android:id="@+id/watchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:onClick="@{() -> watchCallback.onWatchClicked()}"
+            android:text="@string/button_watch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

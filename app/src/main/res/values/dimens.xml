@@ -4,4 +4,10 @@
     <dimen name="app_bar_height">200dp</dimen>
     <dimen name="item_width">200dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_default">16dp</dimen>
+    <dimen name="margin_very_small">4dp</dimen>
+    <dimen name="text_size_title">12sp</dimen>
+    <dimen name="text_size_small">9sp</dimen>
 </resources>

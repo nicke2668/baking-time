@@ -1,4 +1,20 @@
 <resources>
-    <string name="app_name">Baking TIme</string>
+    <string name="appName">Baking Time</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="pref_widget_key">pref_widget_key</string>
+    <string name="pref_title_key">pref_title_key</string>
+    <string name="widget_text">>Enter a recipe and click add widget button</string>
+    <string name="ingredients">ingredients</string>
+    <string name="button_add_widget">ADD WIDGET</string>
+    <string name="steps">steps</string>
+    <string name="button_next">NEXT</string>
+    <string name="button_previous">previous</string>
+    <string name="button_watch">WATCH</string>
+    <string name="recipe_image_cd">CD</string>
+
+    <plurals name="serving_count">
+        <item quantity="zero">%1$d servings</item>
+        <item quantity="one">%1$d serving</item>
+        <item quantity="other">%1$d servings</item>
+    </plurals>
 </resources>

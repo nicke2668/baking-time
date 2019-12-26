@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?><!--Navigation Component - https://developer.android.com/guide/navigation -
+https://developer.android.com/guide/navigation/navigation-design-graph!-->
+<!--When possible - it is a good design idea to have multiple fragments reside under a single activity -
+for reusable UI components sake and resource efficiency. This is the tag that will contain our destinations -
+and their linked actions. !-->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/recipeStepFragment">
+
+    <fragment
+        android:id="@+id/recipeStepFragment"
+        android:name="com.example.bakingtime.view.RecipeStepFragment"
+        android:label="RecipeStepFragment">
+        <argument
+            android:name="recipe"
+            app:argType="com.example.bakingtime.model.Recipe" />
+    </fragment>
+
+</navigation>

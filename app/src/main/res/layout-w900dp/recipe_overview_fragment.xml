@@ -74,26 +74,26 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.3" />
 
-            <!--            <FrameLayout-->
-            <!--                android:id="@+id/stepFragmentPlaceholder"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="match_parent"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="@id/guideline"-->
-            <!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-            <fragment
-                android:id="@+id/stepFragmentContainer"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:defaultNavHost="false"
+            <FrameLayout
+                android:id="@+id/stepFragmentPlaceholder"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/guideline"
-                app:layout_constraintTop_toTopOf="parent"
-                app:navGraph="@navigation/nav_graph_land" />
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--            <fragment-->
+            <!--                android:id="@+id/stepFragmentContainer"-->
+            <!--                android:name="androidx.navigation.fragment.NavHostFragment"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="0dp"-->
+            <!--                app:defaultNavHost="false"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toEndOf="@id/guideline"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                app:navGraph="@navigation/nav_graph_land" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

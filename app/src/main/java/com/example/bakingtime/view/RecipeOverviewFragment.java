@@ -14,7 +14,6 @@ import com.example.bakingtime.viewmodel.DetailViewModelFactory;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -35,13 +34,18 @@ public class RecipeOverviewFragment extends Fragment {
 		binding.ingredientsRecyclerView.setAdapter(ingredientsAdapter);
 		binding.ingredientsRecyclerView.setHasFixedSize(true);
 		requireActivity().setTitle(viewModel.recipe.getName());
-		FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+//		FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+//		Bundle arguments = new Bundle();
+//		arguments.putParcelable("RECIPE", viewModel.recipe);
+//		RecipeStepFragment stepFragment = new RecipeStepFragment();
+//		stepFragment.setArguments(arguments);
+//		transaction.add(R.id.stepFragmentPlaceholder, stepFragment);
+//		transaction.commit();
+
 		Bundle arguments = new Bundle();
 		arguments.putParcelable("RECIPE", viewModel.recipe);
-		RecipeStepFragment stepFragment = new RecipeStepFragment();
-		stepFragment.setArguments(arguments);
-		transaction.add(R.id.stepFragmentPlaceholder, stepFragment);
-		transaction.commit();
+		NavHostFragment.create(R.navigation.nav_graph, arguments);
+		getChildFragmentManager().beginTransaction().add(R.id.stepFragmentPlaceholder, NavHostFragment.create(R.navigation.nav_graph, arguments)).commit();
 		return binding;
 	}
 

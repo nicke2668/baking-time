@@ -33,13 +33,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeListViewHolder> {
 
 		private void considerLoadingDefaultDrawable(Recipe recipe) {
 			if (recipe.getImage().isEmpty()) {
-				Picasso.get().load(R.drawable.placeholder)
-						.placeholder(R.drawable.placeholder)
+				Picasso.get().load(R.drawable.placeholder_image)
+						.placeholder(R.drawable.placeholder_image)
 						.into(binding.backdrop);
 				return;
 			}
 			Picasso.get().load(recipe.getImage())
-					.placeholder(R.drawable.placeholder)
+					.placeholder(R.drawable.placeholder_image)
 					.into(binding.backdrop);
 		}
 	}

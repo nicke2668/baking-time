@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="step"
+            type="com.example.bakingtime.model.Step" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.35" />
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/playerView"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="placeholder,playerView" />
+
+        <TextView
+            android:id="@+id/stepShortDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:text="@{step.getShortDescription()}"
+            android:textColor="@color/stepFragmentShortDescription"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/playerView"
+            app:layout_constraintStart_toStartOf="@id/playerView"
+            app:layout_constraintTop_toBottomOf="@+id/barrier" />
+
+        <TextView
+            android:id="@+id/stepDescription"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:ellipsize="none"
+            android:maxLines="100"
+            android:scrollHorizontally="false"
+            android:text="@{step.getDescription()}"
+            android:textColor="@color/stepFragmentDescription"
+            app:layout_constraintEnd_toEndOf="@id/playerView"
+            app:layout_constraintStart_toStartOf="@id/playerView"
+            app:layout_constraintTop_toBottomOf="@+id/stepShortDescription" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

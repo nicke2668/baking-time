@@ -6,36 +6,33 @@ and their linked actions. !-->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/dashboardFragment">
+    app:startDestination="@id/recipeFragment">
 
     <fragment
-        android:id="@+id/dashboardFragment"
-        android:name="com.example.bakingtime.view.DashboardFragment"
-        android:label="RecipeDashboardFragment">
+        android:id="@+id/recipeFragment"
+        android:name="com.example.bakingtime.view.RecipeFragment"
+        android:label="RecipeFragment">
         <action
-            android:id="@+id/dashboardFragment_to_overviewFragment"
-            app:destination="@id/recipeOverviewFragment" />
+            android:id="@+id/recipeFragment_to_stepsOverviewFragment"
+            app:destination="@id/stepsOverviewFragment" />
 
 
     </fragment>
     <fragment
-        android:id="@+id/recipeOverviewFragment"
-        android:name="com.example.bakingtime.view.RecipeOverviewFragment"
-        android:label="RecipeOverviewFragment">
+        android:id="@+id/stepsOverviewFragment"
+        android:name="com.example.bakingtime.view.StepsOverviewFragment"
+        android:label="StepsOverviewFragment">
         <action
-            android:id="@+id/overviewFragment_to_stepFragment"
-            app:destination="@id/recipeStepFragment" />
+            android:id="@+id/stepsOverviewFragment_to_stepFragment"
+            app:destination="@id/stepFragment" />
         <argument
             android:name="recipe"
             app:argType="com.example.bakingtime.model.Recipe" />
     </fragment>
     <fragment
-        android:id="@+id/recipeStepFragment"
-        android:name="com.example.bakingtime.view.RecipeStepFragment"
-        android:label="RecipeStepFragment">
-        <argument
-            android:name="recipe"
-            app:argType="com.example.bakingtime.model.Recipe" />
+        android:id="@+id/stepFragment"
+        android:name="com.example.bakingtime.view.StepFragment"
+        android:label="StepFragment">
     </fragment>
 
 </navigation>

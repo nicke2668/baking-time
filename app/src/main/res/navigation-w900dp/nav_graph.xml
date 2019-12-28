@@ -6,12 +6,22 @@ and their linked actions. !-->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/recipeStepFragment">
+    app:startDestination="@id/recipeFragment">
 
     <fragment
-        android:id="@+id/recipeStepFragment"
-        android:name="com.example.bakingtime.view.RecipeStepFragment"
-        android:label="RecipeStepFragment">
+        android:id="@+id/recipeFragment"
+        android:name="com.example.bakingtime.view.RecipeFragment"
+        android:label="RecipeFragment">
+        <action
+            android:id="@+id/recipeFragment_to_stepsOverviewFragment"
+            app:destination="@id/stepsOverviewFragment" />
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/stepsOverviewFragment"
+        android:name="com.example.bakingtime.view.StepsOverviewFragment"
+        android:label="StepsOverviewFragment">
         <argument
             android:name="recipe"
             app:argType="com.example.bakingtime.model.Recipe" />

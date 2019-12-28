@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.bakingtime.R;
-import com.example.bakingtime.databinding.DashboardFragmentBinding;
+import com.example.bakingtime.databinding.RecipeFragmentBinding;
 import com.example.bakingtime.model.Recipe;
 import com.example.bakingtime.viewmodel.DashboardViewModel;
 
@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
-public class DashboardFragment extends Fragment {
+public class RecipeFragment extends Fragment {
 
 	private final RecipeAdapter adapter = new RecipeAdapter(this::onItemClick);
 	private DashboardViewModel viewModel;
@@ -26,7 +26,7 @@ public class DashboardFragment extends Fragment {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		DashboardFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.dashboard_fragment, container, false);
+		RecipeFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.recipe_fragment, container, false);
 		binding.recipesRecyclerView.setAdapter(adapter);
 		binding.recipesRecyclerView.setHasFixedSize(true);
 		binding.recipesRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
@@ -37,7 +37,7 @@ public class DashboardFragment extends Fragment {
 	}
 
 	private void onItemClick(Recipe recipe) {
-		NavHostFragment.findNavController(this).navigate(DashboardFragmentDirections.dashboardFragmentToOverviewFragment(recipe));
+		NavHostFragment.findNavController(this).navigate(RecipeFragmentDirections.recipeFragmentToStepsOverviewFragment(recipe));
 	}
 
 	private void setupViewModel() {

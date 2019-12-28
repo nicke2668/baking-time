@@ -1,5 +1,9 @@
 package com.example.bakingtime.repository;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -9,6 +13,7 @@ import com.example.bakingtime.AsyncExecutor;
 import com.example.bakingtime.model.Recipe;
 import com.example.bakingtime.repository.network.GetRecipeDataConsumer;
 
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,6 +27,17 @@ public class RecipeContentRepository implements GetRecipeDataConsumer, AsyncExec
 	public static final RecipeContentRepository INSTANCE = new RecipeContentRepository();
 	private final MutableLiveData<List<Recipe>> recipesLiveData = new MutableLiveData<>();
 
+	@IntDef(value = {ExoPlayerState.DEFAULT, ExoPlayerState.MAXIMIZED})
+	@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE_USE})
+	@Retention(RetentionPolicy.SOURCE)
+	public @interface ExoPlayerState {
+
+		int DEFAULT = 100;
+		int MAXIMIZED = 200;
+	}
+
+	private final StateEmitter exoPlayerStateEmitter = new BasicStateEmitter();
+	private final StateEmitter navigationStateEmitter = new BasicStateEmitter();
 	private RecipeContentRepository() {
 	}
 
@@ -34,6 +50,14 @@ public class RecipeContentRepository implements GetRecipeDataConsumer, AsyncExec
 			getRecipeDao().insertRecipes(results);
 			return NOTHING;
 		});
+	}
+
+	public void emitExoPlayerState(@ExoPlayerState int state) {
+		exoPlayerStateEmitter.emitExoPlayerState(state);
+	}
+
+	public void emitNavigation(int index) {
+		navigationStateEmitter.emitStepSelection(index);
 	}
 
 	private LiveData<List<Recipe>> fetchRecipes() {
@@ -54,6 +78,14 @@ public class RecipeContentRepository implements GetRecipeDataConsumer, AsyncExec
 		});
 
 		return recipesLiveData;
+	}
+
+	public StateEmitter getExoPlayerstateEmitter() {
+		return exoPlayerStateEmitter;
+	}
+
+	public StateEmitter getNavigationStateEmitter() {
+		return navigationStateEmitter;
 	}
 
 	public LiveData<List<Recipe>> loadRecipes() {

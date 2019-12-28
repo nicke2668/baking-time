@@ -13,6 +13,11 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 @Entity
+/**
+ * Model object for a recipe.
+ *
+ * @author Nick Emerson
+ */
 public class Recipe implements Parcelable {
 
 	public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {

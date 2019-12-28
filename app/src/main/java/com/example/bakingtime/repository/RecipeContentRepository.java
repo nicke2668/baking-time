@@ -22,6 +22,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Singleton object that provides data for recipes
+ *
+ * @author Nick Emerson
+ */
 public class RecipeContentRepository implements GetRecipeDataConsumer, AsyncExecutor, RecipeDatabaseClient {
 
 	public static final RecipeContentRepository INSTANCE = new RecipeContentRepository();
@@ -38,6 +43,7 @@ public class RecipeContentRepository implements GetRecipeDataConsumer, AsyncExec
 
 	private final StateEmitter exoPlayerStateEmitter = new BasicStateEmitter();
 	private final StateEmitter navigationStateEmitter = new BasicStateEmitter();
+
 	private RecipeContentRepository() {
 	}
 

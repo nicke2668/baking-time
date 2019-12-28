@@ -3,6 +3,8 @@ package com.example.bakingtime.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import androidx.room.PrimaryKey;
 
 public class Ingredient implements Parcelable {
@@ -19,7 +21,8 @@ public class Ingredient implements Parcelable {
 			return new Ingredient[size];
 		}
 	};
-	private String ingredient;
+	@SerializedName("ingredient")
+	private String name;
 	private String measure;
 	private double quantity;
 	private int recipeId;
@@ -32,7 +35,7 @@ public class Ingredient implements Parcelable {
 	protected Ingredient(Parcel in) {
 		quantity = in.readDouble();
 		measure = in.readString();
-		ingredient = in.readString();
+		name = in.readString();
 		recipeId = in.readInt();
 	}
 
@@ -41,8 +44,8 @@ public class Ingredient implements Parcelable {
 		return 0;
 	}
 
-	public String getIngredient() {
-		return ingredient;
+	public String getName() {
+		return name;
 	}
 
 	public String getMeasure() {
@@ -61,8 +64,8 @@ public class Ingredient implements Parcelable {
 		return roomId;
 	}
 
-	public void setIngredient(String ingredient) {
-		this.ingredient = ingredient;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setMeasure(String measure) {
@@ -85,7 +88,7 @@ public class Ingredient implements Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeDouble(quantity);
 		dest.writeString(measure);
-		dest.writeString(ingredient);
+		dest.writeString(name);
 		dest.writeInt(recipeId);
 	}
 }

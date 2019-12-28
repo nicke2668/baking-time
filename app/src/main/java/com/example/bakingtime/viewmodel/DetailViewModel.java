@@ -8,6 +8,7 @@ import android.content.Context;
 
 import com.example.bakingtime.PreferenceManagerClient;
 import com.example.bakingtime.R;
+import com.example.bakingtime.model.Ingredient;
 import com.example.bakingtime.model.Recipe;
 import com.example.bakingtime.model.Step;
 import com.example.bakingtime.repository.RecipeContentRepository;
@@ -22,23 +23,25 @@ import androidx.lifecycle.ViewModel;
 // TODO: 12/27/2019 use ObservableField to bind to UI directly
 public class DetailViewModel extends ViewModel implements PreferenceManagerClient {
 
-	public Step currentStep;
 	public long exoPlayerPreviousPosition;
 	public boolean exoPlayerState;
-	public int stepNumber;
-	public Recipe recipe;
-	private RecipeContentRepository repository = RecipeContentRepository.INSTANCE;
-	public int stepPosition;
-	public List<Step> steps;
+	public int position;
+	private Recipe recipe;
+	private final RecipeContentRepository repository = RecipeContentRepository.INSTANCE;
+	private List<Step> steps;
+
+	//required to persist viewmodel
+	public DetailViewModel() {
+
+	}
 
 	DetailViewModel(Recipe recipe) {
 		this.recipe = recipe;
 		this.steps = recipe.getSteps();
-		this.currentStep = steps.get(0);
 	}
 
-	public DetailViewModel() {
-
+	public Step getCurrentStep() {
+		return steps.get(position);
 	}
 
 	public void addWidget(Context context) {
@@ -59,6 +62,14 @@ public class DetailViewModel extends ViewModel implements PreferenceManagerClien
 		repository.emitNavigation(index);
 	}
 
+	public List<Ingredient> getIngredients() {
+		return recipe.getIngredients();
+	}
+
+	public String getRecipeName() {
+		return recipe.getName();
+	}
+
 	public void observeExoplayerStateChanges(StepsOverviewFragment stepsOverviewFragment, LifecycleOwner viewLifecycleOwner) {
 		repository.getExoPlayerstateEmitter().addObserver(stepsOverviewFragment, viewLifecycleOwner);
 	}
@@ -67,16 +78,24 @@ public class DetailViewModel extends ViewModel implements PreferenceManagerClien
 		repository.getNavigationStateEmitter().addObserver(stepsOverviewFragment, viewLifecycleOwner);
 	}
 
-	public void onNextStepClicked() {
-		currentStep = steps.get(++stepPosition);
+	public List<Step> getSteps() {
+		return steps;
 	}
 
-	public void onPreviousClicked() {
-		currentStep = steps.get(--stepPosition);
+	public int getTotalStepCount() {
+		return steps.size();
+	}
+
+	public void onNextStepClicked() {
+		position++;
 	}
 
 	public void setRecipe(Recipe recipe) {
 		this.recipe = recipe;
 		this.steps = recipe.getSteps();
+	}
+
+	public void onPreviousClicked() {
+		position--;
 	}
 }

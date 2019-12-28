@@ -48,13 +48,13 @@ public class StepsOverviewFragment extends RecipeDetailFragment implements Emitt
 
 	private void initializeViews(boolean firstTime) {
 		binding.setCallback(this::onClickAddWidget);
-		stepsAdapter.setList(viewModel.recipe.getSteps());
+		stepsAdapter.setList(viewModel.getSteps());
 		binding.stepsRecyclerView.setAdapter(stepsAdapter);
 		binding.ingredientsRecyclerView.setHasFixedSize(true);
-		ingredientsAdapter.setList(viewModel.recipe.getIngredients());
+		ingredientsAdapter.setList(viewModel.getIngredients());
 		binding.ingredientsRecyclerView.setAdapter(ingredientsAdapter);
 		binding.ingredientsRecyclerView.setHasFixedSize(true);
-		requireActivity().setTitle(viewModel.recipe.getName());
+		requireActivity().setTitle(viewModel.getRecipeName());
 		considerInitializingMasterDetailFlow(firstTime);
 	}
 
@@ -104,9 +104,13 @@ public class StepsOverviewFragment extends RecipeDetailFragment implements Emitt
 	}
 
 	private void onWatchClicked(Step step) {
-		viewModel.currentStep = step;
-		viewModel.emitNavigation(viewModel.steps.indexOf(step));
-		if (!isTablet()) NavHostFragment.findNavController(this).navigate(R.id.stepFragment);
+		int index = viewModel.getSteps().indexOf(step);
+		viewModel.emitNavigation(index);
+		//Could be eliminated with observables
+		if (!isTablet()) {
+			viewModel.position = index;
+			NavHostFragment.findNavController(this).navigate(R.id.stepFragment);
+		}
 	}
 
 	private void setupViewModel() {

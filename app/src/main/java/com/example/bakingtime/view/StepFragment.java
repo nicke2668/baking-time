@@ -15,6 +15,7 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.example.bakingtime.R;
 import com.example.bakingtime.databinding.StepFragmentBinding;
+import com.example.bakingtime.model.Step;
 import com.example.bakingtime.repository.EmittedStateObserver;
 import com.example.bakingtime.repository.RecipeContentRepository.ExoPlayerState;
 import com.example.bakingtime.viewmodel.DetailViewModel;
@@ -47,17 +48,15 @@ public class StepFragment extends RecipeDetailFragment implements StepNavigation
 	private SimpleExoPlayer exoPlayer;
 	private DetailViewModel viewModel;
 
-	private void considerLoadingThumbnail() {
-		binding.placeholder.setVisibility(View.VISIBLE);
-		binding.playerView.setVisibility(GONE);
-		if (!TextUtils.isEmpty(viewModel.currentStep.getThumbnailUrl())) {
-			Picasso.get().load(viewModel.currentStep.getThumbnailUrl())
-					.placeholder(R.drawable.placeholder_image)
-					.into(binding.placeholder);
-			return;
-		}
-		binding.placeholder.setImageResource(R.drawable.placeholder_image);
+	private void considerEnteringFullscreen(@NonNull String videoUrl) {
+		if (isTabletAndLandscape() && !videoUrl.isEmpty()) {
+			Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
+			Objects.requireNonNull(getActivity()).getWindow().getDecorView().setSystemUiVisibility(
+					View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+							View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
+			maximizeExoPlayer();
+		}
 	}
 
 	private void handleConfigurationChange(@NonNull Configuration newConfig) {
@@ -102,6 +101,19 @@ public class StepFragment extends RecipeDetailFragment implements StepNavigation
 		Resources resources = requireContext().getResources();
 		return resources.getBoolean(R.bool.isTablet) && resources.getConfiguration().orientation
 				== Configuration.ORIENTATION_LANDSCAPE;
+	}
+
+	private void considerLoadingThumbnail() {
+		binding.placeholder.setVisibility(View.VISIBLE);
+		binding.playerView.setVisibility(GONE);
+		if (!TextUtils.isEmpty(viewModel.getCurrentStep().getThumbnailUrl())) {
+			Picasso.get().load(viewModel.getCurrentStep().getThumbnailUrl())
+					.placeholder(R.drawable.placeholder_image)
+					.into(binding.placeholder);
+			return;
+		}
+		binding.placeholder.setImageResource(R.drawable.placeholder_image);
+
 	}
 
 	private void maximizeExoPlayer() {
@@ -152,35 +164,29 @@ public class StepFragment extends RecipeDetailFragment implements StepNavigation
 		return binding.getRoot();
 	}
 
+	private boolean isTablet() {
+		return requireContext().getResources().getBoolean(R.bool.isTablet);
+	}
+
 	@Override
 	public void onEmittedStateChange(int state) {
 		releasePlayer();
-//		binding.stepDescription.setText("");
-//		binding.stepShortDescription.setText("");
-		viewModel.stepPosition = state;
-		viewModel.currentStep = viewModel.steps.get(state);
+		viewModel.position = state;
 		populateViews();
-		viewModel.stepNumber = 0;
+		if (isTablet())
+			viewModel.position = 0;
 	}
 
 	private void populateViews() {
-		viewModel.currentStep = viewModel.steps.get(viewModel.stepPosition);
-		binding.setStep(viewModel.currentStep);
+		Step step = viewModel.getCurrentStep();
+		binding.setStep(step);
 		binding.setCallback(this);
-		binding.stepShortDescription.setText(viewModel.currentStep.getShortDescription());
-		binding.stepDescription.setText(viewModel.currentStep.getDescription());
-		binding.setTotalStepCount(viewModel.steps.size());
-//		viewModel.stepNumber = -1;
-		if (isTabletAndLandscape() && !viewModel.currentStep.getVideoUrl().isEmpty()) {
-			Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
-			Objects.requireNonNull(getActivity()).getWindow().getDecorView().setSystemUiVisibility(
-					View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-							View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
-			maximizeExoPlayer();
-		}
+		binding.stepShortDescription.setText(step.getShortDescription());
+		binding.stepDescription.setText(step.getDescription());
+		binding.setTotalStepCount(viewModel.getTotalStepCount());
+		String videoUrl = step.getVideoUrl();
+		considerEnteringFullscreen(videoUrl);
 		resetVideo();
-		String videoUrl = viewModel.currentStep.getVideoUrl();
 		if (!videoUrl.isEmpty()) {
 			initializePlayerView(videoUrl);
 			return;
@@ -234,7 +240,7 @@ public class StepFragment extends RecipeDetailFragment implements StepNavigation
 	}
 
 	private void setupViewModel() {
-		viewModel = new ViewModelProvider(NavHostFragment.findNavController(this).getViewModelStoreOwner(R.id.nav_graph).getViewModelStore(), AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(DetailViewModel.class);
+		viewModel = new ViewModelProvider(NavHostFragment.findNavController(this).getViewModelStoreOwner(R.id.nav_graph).getViewModelStore(), AndroidViewModelFactory.getInstance(Objects.requireNonNull(getActivity()).getApplication())).get(DetailViewModel.class);
 	}
 
 }

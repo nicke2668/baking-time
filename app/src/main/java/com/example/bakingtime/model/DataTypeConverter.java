@@ -13,8 +13,8 @@ public class DataTypeConverter {
 	private static final Gson GSON = new Gson();
 
 	@TypeConverter
-	public static String ingredientListToString(List<Ingredient> steps) {
-		return GSON.toJson(steps);
+	public static String ingredientListToString(List<Ingredient> ingredients) {
+		return GSON.toJson(ingredients);
 	}
 
 	@TypeConverter

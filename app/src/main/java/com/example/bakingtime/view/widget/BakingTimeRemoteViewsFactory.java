@@ -19,7 +19,7 @@ import com.example.bakingtime.repository.RecipeDatabaseClient;
 
 public class BakingTimeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory, RecipeDatabaseClient, PreferenceManagerClient {
 
-	private WeakReference<Context> contextWeakReference;
+	private final WeakReference<Context> contextWeakReference;
 	private final List<String> ingredients = new ArrayList<>();
 
 	BakingTimeRemoteViewsFactory(Context context) {
@@ -76,7 +76,7 @@ public class BakingTimeRemoteViewsFactory implements RemoteViewsService.RemoteVi
 			if (recipe != null) {
 				for (Ingredient ingredient : recipe.getIngredients()) {
 					ingredients.add(String.format(Locale.getDefault(), "%.1f %s %s",
-							ingredient.getQuantity(), ingredient.getMeasure(), ingredient.getIngredient()));
+							ingredient.getQuantity(), ingredient.getMeasure(), ingredient.getName()));
 				}
 			}
 		}

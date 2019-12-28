@@ -25,7 +25,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 		}
 
 		void bind(Ingredient ingredient) {
-			binding.setIngredient(ingredient);
+			binding.setModel(ingredient);
 		}
 	}
 

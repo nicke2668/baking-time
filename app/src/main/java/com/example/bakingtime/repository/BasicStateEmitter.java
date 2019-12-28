@@ -31,5 +31,7 @@ public class BasicStateEmitter implements StateEmitter {
 	 */
 	@Override
 	public void removeObservers(@NonNull LifecycleOwner viewLifecycleOwner) {
+		navigationState.removeObservers(viewLifecycleOwner);
+		exoPlayerState.removeObservers(viewLifecycleOwner);
 	}
 }
